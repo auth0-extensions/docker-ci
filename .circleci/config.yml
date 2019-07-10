@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     environment:
-      IMAGE_NAME: auth0extensions/ci-node:dubnium-alpine
+      IMAGE_NAME: auth0extensions/ci-node:generic
     docker:
       - image: circleci/buildpack-deps:stretch
     steps:
@@ -11,15 +11,14 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            cd ./node/10/generic
-            docker build -t $IMAGE_NAME .
+            docker-compose build
       - run:
           name: Archive Docker image
-          command: docker save -o image.tar $IMAGE_NAME
+          command: docker save $(docker images -q) -o images.tar
       - persist_to_workspace:
           root: .
           paths:
-            - ./image.tar
+            - ./images.tar
 
   publish-latest:
     executor: docker-publisher
@@ -29,7 +28,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Load archived Docker image
-          command: docker load -i /tmp/workspace/image.tar
+          command: docker load -i /tmp/workspace/images.tar
       # - run:
       #     name: Publish Docker Image to Docker Hub
       #     command: |

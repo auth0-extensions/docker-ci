@@ -1,0 +1,6 @@
+version: '3'
+
+services:
+  node-10-generic:
+    build: './node/10/generic'
+    image: auth0extensions/ci-node:generic
