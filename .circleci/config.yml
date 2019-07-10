@@ -21,7 +21,8 @@ jobs:
             - ./images.tar
 
   publish-latest:
-    executor: docker
+    docker:
+      - image: circleci/buildpack-deps:stretch
     steps:
       - attach_workspace:
           at: /tmp/workspace
