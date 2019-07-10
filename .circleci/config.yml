@@ -21,7 +21,6 @@ jobs:
             - ./images.tar
 
   publish-latest:
-    executor: docker-publisher
     steps:
       - attach_workspace:
           at: /tmp/workspace
