@@ -12,6 +12,6 @@ RUN apk add --no-cache \
   wget \
   zip
 
-RUN curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | bash
+RUN mkdir -p ~/fossa && curl -L https://github.com/fossas/fossa-installer/archive/v0.0.21.tar.gz | tar -zxv -C ~/fossa --strip-components=1 && chmod a+x ~/fossa/boot.sh && ln -sf ~/fossa/boot.sh /usr/local/bin/fossa && ~/fossa/setup.sh
 
 RUN curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
